@@ -1,0 +1,215 @@
+Algoritmos - Grupo 2.1
+
+Beltrán Aceves (beltran.aceves)
+
+Melisa Barro (melisa.barro)
+
+Dimitry Demyanov (d.demyanov)
+
+
+En este ejercicio haremos un programa de consulta de sinónimos de una palabra dada, usando los datos en el archivo sinonimos.txt de 19062 entradas, con el objetivo de comparar diferentes implementaciones de Diccionarios de Datos(Tablas de Dispersion).
+Las búsquedas se realizarán a partir de la palabra de cuyo significado se buscan sinónimos, y usaremos dos funciones de dispersión diferentes: dispersión A y dispersión B.
+
+Como diccionario de datos se utilizan tablas de dispersión cerrada con exploración lineal, cuadrática y doble con 10007 − x mod 10007 como función de dispersión secundaria (siendo x el resultado de la función de dispersión principal). En todos los casos el factor de carga λ será aproximadamente 0,5 (N = 38197).
+
+
+Las mediciones fueron hechas en un ordenador portátil Huawei Matebook D (Ubuntu 18.04 LTS, i5-7600u 3.4 GHz, 8GB RAM), con el equipo conectado a corriente y en modo de alto rendimiento.
+
+La unidad de tiempo de las mediciones es microsegundos.
+
+
+Nuestro código consta de dos funciones principales que gestionan el resto del programa:
+En primer lugar, tenemos la función test que comprueba la correcta implementación de los diccionarios.
+ 
+A continuación, disponemos de la función tablas que se encarga, en primer lugar, de calentar la máquina (para evitar que los tiempos salgan desordenados o que primero aumenten y luego decrezcan). Posteriormente, de mostrar cada tabla para cada caso, de medir el número de colisiones al insertar todos los elementos y de medir los tiempos de ejecución. Incluye el caso especial en el que, si el tiempo es inferior a 500 microsegundos, la medición del mismo se expresa en funcion de una media para dar un resultado preciso (que se va incrementando en razon de 10 hasta que el tiempo total es mayor que 500 microsegundos). En estos casos, la medición irá acompañada de un asterisco.
+
+No hemos obtenido ningún valor anómalo.
+
+
+Las cotas son las mismas para cada caso, así, tenemos:
+-Cota subestimada: n^0.8 (tiende a más infinito)
+
+-Cota ajustada: n (tiende a una constante, tenemos en cuenta la media de las últimas mediciones):
+Para dispersión cerrada lineal con dispersión A: 158,76
+Para dispersión cerrada lineal con dispersión B: 0,2248
+Para dispersión cerrada cuadrática con dispersión A: 2,90
+Para dispersión cerrada cuadrática con dispersión B: 0,2185
+Para dispersión cerrada doble con dispersión A: 3,16
+Para dispersión cerrada doble con dispersión B: 0,2486
+
+-Cota sobreestimada: n*log(n) (tiende a menos infinito)
+
+
+Para la cota ajustada, se obtiene O(n) en todos los casos porque los tiempos crecen de forma lineal con respecto al número de objetos a buscar, obteniendo en cada caso una constante diferente a la que tiende.
+
+En todos los casos, la dispersión B tiene muchas menos colisiones que la dispersión A, y por lo tanto, un tiempo mucho menor. La más rápida es la dispersión cerrada cuadrática con dispersión B, superando por muy poco a la cerrada doble, también con dispersión B.
+
+
+
+(***********************************************************************************************************************************************************************************************************)
+
+OUTPUT:
+
+***TABLA CERRADA LINEAL
+ {      
+  0-  (IVAN)
+  1- 
+  2- 
+  3- 
+  4- 
+  5- 
+  6-  (LUIS)
+  7-  (ANA)
+  8-  (JOSE)
+  9-  (OLGA)
+ 10-  (ROSA)
+}     
+
+Colisiones al insertar elementos: 12
+
+ Al buscar:  ANA, encuentro:  ANA, colisiones:    0
+ Al buscar: LUIS, encuentro: LUIS, colisiones:    0
+ Al buscar: JOSE, encuentro: JOSE, colisiones:    1
+ Al buscar: OLGA, encuentro: OLGA, colisiones:    2
+ Al buscar: ROSA, encuentro: ROSA, colisiones:    4
+ Al buscar: IVAN, encuentro: IVAN, colisiones:    5
+ No encuentro: CARLOS, colisiones 6
+ 
+
+
+  
+ ***TABLA CERRADA CUADRATICA
+ {      
+  0-  (OLGA)
+  1- 
+  2- 
+  3- 
+  4-  (IVAN)
+  5- 
+  6-  (LUIS)
+  7-  (ANA)
+  8-  (JOSE)
+  9- 
+ 10-  (ROSA)
+}     
+
+Colisiones al insertar elementos: 8
+
+ Al buscar:  ANA, encuentro:  ANA, colisiones:    0
+ Al buscar: LUIS, encuentro: LUIS, colisiones:    0
+ Al buscar: JOSE, encuentro: JOSE, colisiones:    1
+ Al buscar: OLGA, encuentro: OLGA, colisiones:    2
+ Al buscar: ROSA, encuentro: ROSA, colisiones:    2
+ Al buscar: IVAN, encuentro: IVAN, colisiones:    3
+ No encuentro: CARLOS, colisiones 5
+ 
+
+
+ ***Dispersion cerrada lineal con dispersion A 								
+Insertando 19062 elementos... Numero total de colisiones: 172623183
+
+             n            t(n)           t(n)/n^0.8          t(n)/n       t(n)/n*log(n)         Iter(*)
+--------------------------------------------------------------------------------------------------------
+           125        23109.000000       278.887562       184.872000       16.74122146               1 
+           250        46872.000000       324.890851       187.488000       15.08445883               1 
+           500        89984.000000       358.232756       179.968000       13.02651822               1 
+          1000       175492.000000       401.266891       175.492000       11.54415551               1 
+          2000       327922.000000       430.648125       163.961000        9.88425480               1 
+          4000       637943.000000       481.182569       159.485750        8.87294187               1 
+          8000      1270070.000000       550.214044       158.758750        8.20005725               1 
+         16000      2518962.000000       626.760522       157.435125        7.58833850               1 
+
+
+Los tiempos acompañados de un asterisco (*) han sido medidos con un numero de iteraciones variable en un bucle
+
+***Dispersion cerrada lineal con dispersion B 
+Insertando 19062 elementos... Numero total de colisiones: 16965
+
+             n            t(n)           t(n)/n^0.8          t(n)/n       t(n)/n*log(n)         Iter(*)
+--------------------------------------------------------------------------------------------------------
+           125           35.727000 *       0.431166         0.285816        0.02588228           10000 
+           250           64.590000 *       0.447702         0.258360        0.02078651           10000 
+           500          118.524000 *       0.471853         0.237048        0.01715811           10000 
+          1000          226.417000 *       0.517708         0.226417        0.01489409           10000 
+          2000          447.527000 *       0.587721         0.223764        0.01348940           10000 
+          4000          912.000000         0.687896         0.228000        0.01268471               1 
+          8000         1798.000000         0.778922         0.224750        0.01160858               1 
+         16000         3525.000000         0.877080         0.220312        0.01061901               1 
+
+
+Los tiempos acompañados de un asterisco (*) han sido medidos con un numero de iteraciones variable en un bucle
+
+***Dispersion cerrada cuadratica con dispersion A 
+Insertando 19062 elementos... Numero total de colisiones: 2106581
+
+             n            t(n)           t(n)/n^0.8          t(n)/n       t(n)/n*log(n)         Iter(*)
+--------------------------------------------------------------------------------------------------------
+           125          264.929000 *       3.197257         2.119432        0.19192674           10000 
+           250          566.000000         3.923200         2.264000        0.18215147               1 
+           500         1072.000000         4.267709         2.144000        0.15518789               1 
+          1000         2088.000000         4.774265         2.088000        0.13735211               1 
+          2000         4099.000000         5.383069         2.049500        0.12355243               1 
+          4000        11708.000000         8.831017         2.927000        0.16284277               1 
+          8000        23193.000000        10.047568         2.899125        0.14974287               1 
+         16000        40114.000000         9.981044         2.507125        0.12084288               1 
+
+
+Los tiempos acompañados de un asterisco (*) han sido medidos con un numero de iteraciones variable en un bucle
+
+***Dispersion cerrada cuadratica con dispersion B
+Insertando 19062 elementos... Numero total de colisiones: 13366
+
+             n            t(n)           t(n)/n^0.8          t(n)/n       t(n)/n*log(n)         Iter(*)
+--------------------------------------------------------------------------------------------------------
+           125           32.182000 *       0.388384         0.257456        0.02331412           10000 
+           250           58.517000 *       0.405608         0.234068        0.01883208           10000 
+           500          114.453000 *       0.455646         0.228906        0.01656877           10000 
+          1000          219.206000 *       0.501220         0.219206        0.01441974           10000 
+          2000          432.709000 *       0.568261         0.216355        0.01304275           10000 
+          4000          874.000000         0.659234         0.218500        0.01215618               1 
+          8000         1773.000000         0.768091         0.221625        0.01144717               1 
+         16000         3479.000000         0.865634         0.217438        0.01048044               1 
+
+
+Los tiempos acompañados de un asterisco (*) han sido medidos con un numero de iteraciones variable en un bucle
+
+***Dispersion cerrada doble con dispersion A
+Insertando 19062 elementos... Numero total de colisiones: 1451531
+
+             n            t(n)           t(n)/n^0.8          t(n)/n       t(n)/n*log(n)         Iter(*)
+--------------------------------------------------------------------------------------------------------
+           125          294.839000 *       3.558221         2.358712        0.21359492           10000 
+           250          607.000000         4.207389         2.428000        0.19534619               1 
+           500         1209.000000         4.813116         2.418000        0.17502068               1 
+          1000         2438.000000         5.574549         2.438000        0.16037569               1 
+          2000         4643.000000         6.097484         2.321500        0.13994973               1 
+          4000        12860.000000         9.699938         3.215000        0.17886556               1 
+          8000        25297.000000        10.959053         3.162125        0.16332710               1 
+         16000        45804.000000        11.396813         2.862750        0.13798392               1 
+
+
+Los tiempos acompañados de un asterisco (*) han sido medidos con un numero de iteraciones variable en un bucle
+
+***Dispersion cerrada doble con dispersion B 
+Insertando 19062 elementos... Numero total de colisiones: 19401
+
+             n            t(n)           t(n)/n^0.8          t(n)/n       t(n)/n*log(n)         Iter(*)
+--------------------------------------------------------------------------------------------------------
+           125           38.193000 *       0.460927         0.305544        0.02766876           10000 
+           250           65.766000 *       0.455854         0.263064        0.02116497           10000 
+           500          126.230000 *       0.502531         0.252460        0.01827366           10000 
+          1000          247.696000 *       0.566363         0.247696        0.01629385           10000 
+          2000          528.000000         0.693403         0.264000        0.01591502               1 
+          4000         1014.000000         0.764832         0.253500        0.01410340               1 
+          8000         1989.000000         0.861666         0.248625        0.01284174               1 
+         16000         3819.000000         0.950232         0.238687        0.01150469               1 
+
+
+Los tiempos acompañados de un asterisco (*) han sido medidos con un numero de iteraciones variable en un bucle
+
+
+
+
+Para la cota ajustada, se obtiene O(n) en todos los casos porque los tiempos crecen de forma lineal con respecto al número de objetos a buscar, obteniendo en cada caso una constante diferente a la que tiende.
+
+En todos los casos, la dispersión B tiene muchas menos colisiones que la dispersión A, y por lo tanto, un tiempo mucho menor. La más rápida es la dispersión cerrada cuadrática con dispersión B, superando por muy poco a la cerrada doble, también con dispersión B. A su vez concluímos que lo mas importante es la funcion hash, ya que como se puede observar en la DispersionB apenas hay diferencia entre las diferentes exploraciones, mientras que en el caso de la DispersionA dependiendo de la exploracion que se elija podemos mitigar mas o menos la mala eleccion de función hash.

@@ -1,0 +1,95 @@
+Grupo 2.1
+
+
+Beltrán Aceves (beltran.aceves)
+
+Melisa Barro (melisa.barro)
+
+Dimitry Demyanov (d.demyanov)
+
+
+En este ejercicio implementaremos el pseudocódigo de tres algoritmos de la sucesión de Fibonacci, así como mediremos sus tiempos de ejecución para diferentes valores y analizaremos sus cotas.
+La principal diferencia entre ellos es que el primero es recursivo, mientras que los otros dos son iterativos. Además, varían en cuanto a su eficiencia.
+Las mediciones fueron hechas en un ordenador portátil Huawei Matebook D (Ubuntu 18.04 LTS, i5-7600u, 8GB RAM)
+
+
+Nuestro código consta de dos funciones principales que gestionan el resto del programa:
+En primer lugar, tenemos una función llamada testSecuencia que muestra que los algoritmos están correctamente 
+implementados y cumplen la sucesión de Fibonacci. A continuación, disponemos de un test para cada algoritmo que mide
+los tiempos de ejecución (en milisegundos) y además incluyen el caso especial en el que, si el tiempo es inferior a 500 milisegundos, la medición del
+mismo se expresa como la media de un gran número de ejecuciones, para dar un resultado preciso. 
+
+Después tenemos la función sacarTablas, encargada de imprimir por pantalla las tablas de cada algoritmo, pero intentando evitar valores anómalos. Consta de dos bucles, uno dentro de
+otro. El primero es responsable de 'calentar' la máquina, calculando dos iteraciones completas de la tabla antes de mostrar una tercera, para evitar que los tiempos salgan desordenados, que 
+primero vayan aumentando y luego decrezcan, o que no sean todo lo rápidos que pudieran ser al estar el equipo en un modo de ahorro de energía. Para ello, ejecuta cada algoritmo 3 veces y en la última iteración del bucle activaría un byte de control responsable de llamar a cada test de cada algoritmo de forma que esta vez sí imprima por pantalla la tabla, que contendrá los resultados correctos (los tiempos calculados como media tendrán un asterisco). Todos los tiempos fueron medidos con el equipo conectado a la red y sin ningún programa de fondo.
+
+
+Con respecto al análisis de las cota, teniendo en cuenta que definimos:
+	- n = como la posición dentro de la sucesión de Fibonacci.
+    - f(n) = como la cota subestimada. 1.1^n, n^0.8 y log(n)^(1/2), respectivamente.
+    - g(n) = como la cota ajustada. ((1+5^0.5)/2)^n, n y log(n), respectivamente.
+    - h(n) = como la cota sobreestimada. 2^n, n * log(n) y n^0.5, respectivamente.
+
+Decimos que:
+	- La cota subestimada es correcta, ya que la funcion del tiempo t(n)/f(n) se aproxima al infinito.
+	- La cota sobreestimada es correcta, ya que la funcion del tiempo t(n)/g(n) se aproxima a una constante.
+	- La cota ajustada es correcta, ya que la funcion del tiempo t(n)/h(n) se aproxima a cero.
+
+Y por lo tanto, las O de cada algoritmo:
+	- Fibonacci 1: O(φ^n) = t(n)/g(n), con φ = ((1+5^0.5)/2).
+	- Fibonacci 2: O(n) = t(n)/g(n).
+	- Fibonacci 3: O(log(n)) = t(n)/g(n).
+
+
+Como conclusión, analizando cada algoritmo con respecto a su O, afirmamos que:
+	- Fibonacci 1, debido a que es una función recursiva y su O es exponencial, presenta un crecimiento rápido en sus tiempos, pero no es un algoritmo óptimo ni eficiente para n's grandes (a medida que crezca la 	n, también lo hará de forma exponencial su tiempo de ejecución), esto se ve claramente en n=32, pues el tiempo aumenta considerablemente.
+	- Fibonacci 2, dado que su O es un polinomio, se encuentra 'en el medio' en cuanto a eficiencia. Es más eficiente que Fibonacci 1, pero menos que Fibonacci 3.
+	- Fibonacci 3, gracias a que su O es logarítmica, es el algoritmo más óptimo y eficiente. Su lento crecimiento nos permite tomar valores más grandes de n sin obtener tiempos desproporcionadamente grandes.
+
+     TEST SECUENCIA: 
+
+      n fib1(n) fib2(n) fib3(n) 
+     ---------------------------
+      0       0       0       0 
+      1       1       1       1 
+      2       1       1       1 
+      3       2       2       2 
+      4       3       3       3 
+      5       5       5       5 
+      6       8       8       8 
+      7      13      13      13 
+      8      21      21      21 
+      9      34      34      34 
+     10      55      55      55 
+     11      89      89      89 
+     12     144     144     144 
+     13     233     233     233 
+     14     377     377     377 
+     15     610     610     610 
+
+Tiempos fib1(n)            n          Tiempo     Cota subestimada   Cota ajustada  Cota sobreestimada 
+-----------------------------------------------------------------------------------------------------
+                           2        0.006200 *           0.005124        0.002368            0.001550
+                           4        0.019300 *           0.013182        0.002816            0.001206
+                           8        0.142000 *           0.066244        0.003023            0.000555
+                          16        6.764500 *           1.472152        0.003065            0.000103
+                          32    14979.000000           709.442000        0.003075            0.000003
+
+Tiempos fib2(n)            n          Tiempo     Cota subestimada   Cota ajustada  Cota sobreestimada 
+-----------------------------------------------------------------------------------------------------
+                        1000        3.336700 *           0.013284        0.003337            0.000483
+                       10000       33.580300 *           0.021188        0.003358            0.000365
+                      100000      335.981700 *           0.033598        0.003360            0.000292
+                     1000000     3372.000000             0.053443        0.003372            0.000244
+                    10000000    33768.000000             0.084821        0.003377            0.000210
+
+Tiempos fib3(n)            n          Tiempo     Cota subestimada   Cota ajustada  Cota sobreestimada 
+-----------------------------------------------------------------------------------------------------
+                        1000        0.050800 *           0.019328        0.007354            0.001606
+                       10000        0.064800 *           0.021352        0.007036            0.000648
+                      100000        0.078300 *           0.023076        0.006801            0.000248
+                     1000000        0.092300 *           0.024832        0.006681            0.000092
+                    10000000        0.109800 *           0.027349        0.006812            0.000035
+
+Los tiempos acompañados de un asterisco (*) han sido medidos como la media de 10000 iteraciones en un bucle
+

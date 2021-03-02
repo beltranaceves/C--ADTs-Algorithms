@@ -1,0 +1,139 @@
+Algoritmos - Grupo 2.1
+
+Beltrán Aceves (beltran.aceves)
+
+Melisa Barro (melisa.barro)
+
+Dimitry Demyanov (d.demyanov)
+
+
+En este ejercicio implementamos y validamos el funcionamiento de diferentes operaciones con montículos de máximos.
+
+
+Las mediciones fueron hechas en un ordenador portátil Lenovo z50-70 (Ubuntu 18.01.1 LTS, i7-4510U 2.0 GHz, 16GB RAM) con el equipo conectado a la corriente y en modo alto rendimiento.
+
+La unidad de tiempo de las mediciones es microsegundos.
+
+
+Nuestro código consta de una función principal que gestiona el resto del programa:
+sacarTablas, que primero llama a la fución calentar la máquina (para evitar que los tiempos salgan desordenados o que primero aumenten y luego decrezcan). Luego, llama a la función 
+test para comprobar que crea correctamente el montículo y que la ordenación por montículos ordena el vector. A continuación, realizamos la medición de tiempos de crear un montículo 
+a partir de un vector ascendente, como recomienda el enunciado. Por último realizamos la medición de tiempos de la ordenación por montículos para vectores aleatorios, ascendentes
+y descendentes. 
+En las mediciones incluimos el caso especial en el que, si el tiempo es inferior a 500 microsegundos, la medición del mismo se expresa en funcion de una media para dar un resultado
+preciso (que se va incrementando en razon de 2 hasta que el tiempo total es mayor que 500 microsegundos). En estos casos, la medición irá acompañada de un asterisco. 
+
+No hemos obtenido ningún valor anómalo.
+
+
+Las cotas para la creación de montículos a partir del vector ascendente son:
+-Cota subestimada: t(n)/n^0.9 (tiende a más infinito)
+
+-Cota ajustada: t(n)/n (tiende a una constante: 0,0185)
+
+-Cota sobreestimada: t(n)/n^1.1 (tiende a 0)
+
+
+Las cotas son las mismas para cada caso de ordenación por montículos, así, tenemos:
+-Cota subestimada: t(n)/n*log(n)^0.6 (tiende a más infinito)
+
+-Cota ajustada: t(n)/n*log(n) (tiende a una constante, tenemos en cuenta la media de las últimas mediciones):
+Para ordenación por montículos con vector aleatorio: 0,0242
+
+Para ordenación por montículos con vector descendente: 0,0182
+
+Para ordenación por montículos con vector ascendente: 0,0186
+
+-Cota sobreestimada: t(n)/n*log(n)^1.2 (tiende a 0)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+               Test:
+____________________________________
+ 
+ 
+Vector aleatorio: 4   1   5   10   0   7   11   0   3   10   9   6  
+Montículo: 11  10  7  10  9  6  5  0  3  0  1  4  
+ 
+ 
+                                   [11]
+                 [10]------------------------------------[7]
+        [10]------------------[9]                 [6]------------------[5]
+   [0]----------[3]       [0]----------[1]      [4]
+ 
+ 
+Ordenacion por montículos
+Vector:0  0  1  3  4  5  6  7  9  10  10  11  
+ 
+Creación de monticulos a partir de vectores ascendentes
+ 
+             n            t(n)           t(n)/n^0.9          t(n)/n          t(n)/n^1.1         Iter(*)
+--------------------------------------------------------------------------------------------------------
+          1000           18.309000 *       0.036531         0.018309        0.00917624            1000
+          2000           35.967000 *       0.038457         0.017983        0.00840952            1000
+          4000           79.160000 *       0.045358         0.019792        0.00863455            1000
+          8000          143.185000 *       0.043966         0.017898        0.00728616            1000
+         16000          283.661000 *       0.046676         0.017729        0.00673392            1000
+         32000          603.000000         0.053172         0.018844        0.00667809               1
+         64000         1167.000000         0.055145         0.018234        0.00602938               1
+        128000         2372.000000         0.060066         0.018531        0.00571720               1
+ 
+ 
+Los tiempos acompañados de un asterisco (*) han sido medidos con un numero de iteraciones variable en un bucle
+ 
+Ordenación por montículos con vector aleatorio:
+ 
+ 
+             n            t(n)    t(n)/n*log(n)^0.6     t(n)/n*log(n)   t(n)/n*log(n)^1.2         Iter(*)
+--------------------------------------------------------------------------------------------------------
+          1000          165.167000 *       0.051799         0.023913        0.01624497            1000
+          2000          364.221000 *       0.053928         0.023959        0.01596970            1000
+          4000          778.000000         0.054659         0.023451        0.01536030               1
+          8000         1661.000000         0.055604         0.023102        0.01489123               1
+         16000         3572.000000         0.057182         0.023062        0.01464612               1
+         32000         7970.000000         0.061242         0.024010        0.01503829               1
+         64000        17108.000000         0.063184         0.024155        0.01493483               1
+        128000        36465.000000         0.064927         0.024225        0.01479745               1
+ 
+ 
+Los tiempos acompañados de un asterisco (*) han sido medidos con un numero de iteraciones variable en un bucle
+ 
+Ordenación por montículos con vector descendente:
+ 
+ 
+             n            t(n)    t(n)/n*log(n)^0.6     t(n)/n*log(n)   t(n)/n*log(n)^1.2         Iter(*)
+--------------------------------------------------------------------------------------------------------
+          1000          137.873000 *       0.043239         0.019959        0.01356047            1000
+          2000          306.731000 *       0.045416         0.020177        0.01344898            1000
+          4000          664.000000         0.046652         0.020014        0.01310956               1
+          8000         1358.000000         0.045461         0.018888        0.01217477               1
+         16000         2827.000000         0.045255         0.018252        0.01159143               1
+         32000         5969.000000         0.045835         0.017982        0.01126268               1
+         64000        12881.000000         0.047573         0.018187        0.01124477               1
+        128000        27599.000000         0.049141         0.018335        0.01119964               1
+ 
+ 
+Los tiempos acompañados de un asterisco (*) han sido medidos con un numero de iteraciones variable en un bucle
+ 
+Ordenación por montículos con vector ascendente:
+ 
+ 
+             n            t(n)    t(n)/n*log(n)^0.6     t(n)/n*log(n)   t(n)/n*log(n)^1.2         Iter(*)
+--------------------------------------------------------------------------------------------------------
+          1000          148.173000 *       0.046469         0.021454        0.01457353            1000
+          2000          321.844000 *       0.047654         0.021171        0.01411163            1000
+          4000          682.000000         0.047914         0.020557        0.01346494               1
+          8000         1401.000000         0.046900         0.019486        0.01256027               1
+         16000         2941.000000         0.047080         0.018988        0.01205886               1
+         32000         6172.000000         0.047394         0.018593        0.01164571               1
+         64000        12971.000000         0.047905         0.018314        0.01132334               1
+        128000        28022.000000         0.049894         0.018616        0.01137129               1
+ 
+ 
+Los tiempos acompañados de un asterisco (*) han sido medidos con un numero de iteraciones variable en un bucle
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Como conclusión, comprobamos que la complejidad computacional de la creación de montículos con vectores ascendetes es O(n), ya que los tiempos crecen de forma lineal con respecto al tamaño del vector.
+En los casos de ordenación, la complejidad es O(n*log(n)) ya que la complejidad computacional de eliminar_mayor es log(n) por culpa de hundir (en cada iteración baja un nivel con lo que, en el peor
+caso o en el caso medio, su complejidad es log(n)) y tenemos n elementos en el vector.
